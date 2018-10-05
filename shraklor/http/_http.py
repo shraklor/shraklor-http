@@ -40,6 +40,7 @@ class Http():
         self.proxy = kwargs.get('proxy', self._DEFAULT_PROXY)
         self.timeout = kwargs.get('timeout', self._DEFAULT_TIMEOUT)
         self.stream = kwargs.get('stream', False)
+        self.raise_http_errors = False  # this can be set to True after instantiating
 
 
     @staticmethod
@@ -104,7 +105,8 @@ class Http():
                                 proxies=proxy,
                                 timeout=timeout)
 
-            response.raise_for_status()
+            if self.raise_http_errors:
+                response.raise_for_status()
 
         return response
 
